@@ -275,4 +275,71 @@ curl http://app.cic-citrix.org/
 #### Result
 ![Screenshot 2019-03-29 at 5 58 49 PM](https://user-images.githubusercontent.com/43468858/55232781-8bebf680-524c-11e9-86e1-2209d519f135.png)
 
-   
+## Usecase 5: HTTP request redirected to HTTPS request using responder policy
+
+* [http_to_https_redirect.yaml](https://github.com/SaravanakumarR2018/CIC-crd-usecases/blob/master/usecase5/http_to_https_redirect.yaml)
+
+```
+apiVersion: citrix.com/v1
+kind: rewritepolicy
+metadata:
+  name: httptohttps
+spec:
+  responder-policies:
+    - servicenames:
+        - frontend
+      responder-policy:
+        redirect: 
+          url: '"https://" +http.req.HOSTNAME.SERVER+":"+"443"+http.req.url'
+        respond-criteria: 'http.req.is_valid'
+        comment: 'http to https'
+```
+
+### Kubectl command to apply redirect HTTP to HTTPS request RewritePolicy CRD
+```
+kubectl create -f http_to_https_redirect.yaml
+```
+
+### The http request will be redirected to https request
+```
+Saravanas-MacBook-Pro:~ saravanakumarr$ curl -vvv  http://app.cic-citrix.org
+* Rebuilt URL to: http://app.cic-citrix.org/
+*   Trying 10.102.33.176...
+* TCP_NODELAY set
+* Connected to app.cic-citrix.org (10.102.33.176) port 80 (#0)
+> GET / HTTP/1.1
+> Host: app.cic-citrix.org
+> User-Agent: curl/7.54.0
+> Accept: */*
+> 
+< HTTP/1.1 302 Found : Moved Temporarily
+< Location: https://app.cic-citrix.org:443/   =======> Redirected to HTTPS
+< Connection: close
+< Cache-Control: no-cache
+< Pragma: no-cache
+< 
+* Closing connection 0
+
+```
+
+
+```
+Saravanas-MacBook-Pro:~ saravanakumarr$ curl -vvv  http://app.cic-citrix.org/simple
+*   Trying 10.102.33.176...
+* TCP_NODELAY set
+* Connected to app.cic-citrix.org (10.102.33.176) port 80 (#0)
+> GET /simple HTTP/1.1
+> Host: app.cic-citrix.org
+> User-Agent: curl/7.54.0
+> Accept: */*
+> 
+< HTTP/1.1 302 Found : Moved Temporarily
+< Location: https://app.cic-citrix.org:443/simple     ========> Redirected to HTTPS
+< Connection: close
+< Cache-Control: no-cache
+< Pragma: no-cache
+< 
+* Closing connection 0
+
+```
+
