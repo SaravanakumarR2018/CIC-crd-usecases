@@ -262,7 +262,7 @@ TRIMMED
 ........
 ```
 
-## Usecase 4b) Adding X-Forwarded-For header within HTTP
+# Usecase 5) Adding X-Forwarded-For header within HTTP
 
 * [http_x_forwarded_for_insert.yaml](https://github.com/SaravanakumarR2018/CIC-crd-usecases/blob/master/usecase4/http_x_forwarded_for_insert.yaml)
 ```
@@ -314,7 +314,7 @@ curl http://app.cic-citrix.org/
 #### Result
 ![Screenshot 2019-03-29 at 5 58 49 PM](https://user-images.githubusercontent.com/43468858/55232781-8bebf680-524c-11e9-86e1-2209d519f135.png)
 
-## Usecase 5: HTTP request redirected to HTTPS request using responder policy
+## Usecase 6: HTTP request redirected to HTTPS request using responder policy
 
 * [http_to_https_redirect.yaml](https://github.com/SaravanakumarR2018/CIC-crd-usecases/blob/master/usecase5/http_to_https_redirect.yaml)
 
