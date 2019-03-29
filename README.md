@@ -85,5 +85,33 @@ TRIMMED
 
 ## a) Modifying the approot to another url
 
+* [http_approot_request_modify.yaml](https://github.com/SaravanakumarR2018/CIC-crd-usecases/blob/master/usecase3/http_approot_request_modify.yaml)
+
+ ```
+ apiVersion: citrix.com/v1
+kind: rewritepolicy
+metadata:
+  name: httpapprootrequestmodify
+spec:
+  rewrite-policies:
+    - servicenames: 
+        - frontend
+      rewrite-policy:
+        operation: replace
+        target: http.req.url
+        modify-expression: '"/citrix-approot/"'
+        comment: 'HTTP app root request modify'
+        direction: REQUEST
+        rewrite-criteria: http.req.url.eq("/")
+```
+### Kubectl command to apply rewrite policy
+```
+kubectl create -f http_approot_request_modify.yaml
+```
+
+The url **/** is modified to **/citrix-approot/**
+
+
+
 
    
