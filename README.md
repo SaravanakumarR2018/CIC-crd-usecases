@@ -117,8 +117,7 @@ The url **/** is modified to **/citrix-approot/**
 curl -vvv http://app.cic-citrix.org/
 ```
 The url is modified to /citrix-approot/
-
-(https://user-images.githubusercontent.com/43468858/55230312-72937c00-5245-11e9-89ce-bd6dcfe97cbc.png)
+![Screenshot 2019-03-29 at 5 09 19 PM](https://user-images.githubusercontent.com/43468858/55230505-01a09400-5246-11e9-884e-61a6b70232ea.png)
 
 
 
