@@ -16,3 +16,14 @@ kubectl  create secret tls apache --cert citrix-ingress-gke.crt --key citrix-ing
 kubectl create -f citrix_ingress_example.yaml
 kubectl create -f web-frontend.yaml
 ```
+# USECASE 1: Adding response header on replies to client
+
+   The below yaml file will add the following headers with the http response sent from microservices to client
+   
+   * Add the client source port to the header
+   * Add the server destination IP address
+   * a random http header
+   
+   Similar way we can include a variety of information supported by the Citrix ADC on the response header
+   
+   
