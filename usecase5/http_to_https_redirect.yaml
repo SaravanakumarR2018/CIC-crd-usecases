@@ -1,0 +1,14 @@
+apiVersion: citrix.com/v1
+kind: rewritepolicy
+metadata:
+  name: httptohttps
+spec:
+  responder-policies:
+    - servicenames:
+        - frontend
+      responder-policy:
+        redirect: 
+          url: '"https://" +http.req.HOSTNAME.SERVER+":"+"443"+http.req.url'
+        respond-criteria: 'http.req.is_valid'
+        comment: 'http to https'
+    
