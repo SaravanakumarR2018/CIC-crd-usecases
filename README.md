@@ -45,7 +45,7 @@ spec:
         direction: RESPONSE
         rewrite-criteria: 'http.req.url.contains("/citrix-app/")'
   ```
-  # Kubectl command to add the response headers
+  ## Kubectl command to add the response headers
   ```
   kubectl create -f add_response_headers.yaml
   ```
