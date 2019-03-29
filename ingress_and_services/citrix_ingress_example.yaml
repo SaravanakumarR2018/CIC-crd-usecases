@@ -1,0 +1,34 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: citrix-http 
+  annotations: 
+   NETSCALER_VIP: "10.102.33.176"
+spec:
+  rules:
+  - host:  app.cic-citrix.org
+    http:
+      paths:
+      - backend:
+          serviceName: frontend
+          servicePort: 80
+
+---
+
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: citrix-ssl
+  annotations:
+   ingress.citrix.com/secure_backend: '{"frontend": "True"}'
+   NETSCALER_VIP: "10.102.33.176"
+spec:
+  tls:
+  - secretName: apache
+  rules:
+  - host:  app.cic-citrix.org
+    http:
+      paths:
+      - backend:
+          serviceName: frontend
+          servicePort: 443

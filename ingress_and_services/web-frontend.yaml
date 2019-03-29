@@ -1,0 +1,46 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: frontend
+  labels:
+      name: frontend
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: frontend
+        app: frontend
+    spec:
+      containers:
+      - name: frontend
+        image: in-docker-reg.eng.citrite.net/cpx-dev/web-test-ssl:v2 
+        ports:
+        - name: frontend80
+          containerPort: 80
+        - name: frontend443
+          containerPort: 443
+
+        resources:
+          requests:
+            cpu: 100m
+            memory: 100Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend
+  labels:
+    app: frontend
+spec:
+  type: NodePort
+  ports:
+  - name: port-80
+    port: 80
+    targetPort: 80 
+  - name: port-443
+    port: 443
+    targetPort: 443
+  selector:
+    name: frontend
+
