@@ -27,7 +27,25 @@ kubectl create -f web-frontend.yaml
    Similar way we can include a variety of information supported by the Citrix ADC on the response header
    
    * [add_response_headers.yaml](https://github.com/SaravanakumarR2018/CIC-crd-usecases/blob/master/usecase1/add_response_headers.yaml)
-  
+  ```
+  apiVersion: citrix.com/v1
+kind: rewritepolicy
+metadata:
+  name: addresponseheaders
+spec:
+  rewrite-policies:
+    - servicenames: 
+        - frontend
+      rewrite-policy:
+        operation: insert_before_all
+        target: http.res.full_header
+        modify-expression: '"\r\nx-port: "+client.tcp.srcport+"\r\nx-ip:"+client.ip.dst+"\r\nx-new-dummy-header: Sending_a_gift"'
+        multiple-occurence-modify: 'text("\r\n\r\n")'
+        comment: 'Response header rewrite'
+        direction: RESPONSE
+        rewrite-criteria: 'http.req.url.contains("/citrix-app/")'
+  ```
+  # Kubectl command to add the response headers
   ```
   kubectl create -f add_response_headers.yaml
   ```
