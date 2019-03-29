@@ -50,9 +50,9 @@ kubectl create -f web-frontend.yaml
 < Transfer-Encoding: chunked
 < Connection: keep-alive
 < X-Powered-By: PHP/5.5.9-1ubuntu4.14
-< x-port: 22481
-< x-ip:10.102.33.176
-< x-new-dummy-header: Sending_a_gift
+< x-port: 22481 ==================> NEW RESPONSE HEADER
+< x-ip:10.102.33.176 ==================> NEW RESPONSE HEADER
+< x-new-dummy-header: Sending_a_gift ==================> NEW RESPONSE HEADER
 < 
 <html>
 <head>
