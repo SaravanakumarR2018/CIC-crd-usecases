@@ -1,0 +1,16 @@
+apiVersion: citrix.com/v1
+kind: rewritepolicy
+metadata:
+  name: httpurlreplacestring
+spec:
+  rewrite-policies:
+    - servicenames: 
+        - frontend
+      rewrite-policy:
+        operation: replace_all
+        target: http.req.url
+        modify-expression: '"/"'
+        multiple-occurence-modify: 'regex(re~((^(\/something\/))|(^\/something$))~)'
+        comment: 'HTTP url replace string'
+        direction: REQUEST
+        rewrite-criteria: http.req.is_valid
