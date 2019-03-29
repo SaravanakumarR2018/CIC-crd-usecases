@@ -111,6 +111,15 @@ kubectl create -f http_approot_request_modify.yaml
 
 The url **/** is modified to **/citrix-approot/**
 
+### Simple curl request with default url **/**
+
+```
+curl -vvv http://app.cic-citrix.org/
+```
+The url is modified to /citrix-approot/
+
+[Screenshot 2019-03-29 at 5 09 19 PM](https://user-images.githubusercontent.com/43468858/55230312-72937c00-5245-11e9-89ce-bd6dcfe97cbc.png)
+
 
 
 
