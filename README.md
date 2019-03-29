@@ -83,6 +83,8 @@ TRIMMED
 # USECASE 2:
 ## Usecase 2a: Replace hostname with another
 
+The hostname **app.cic-citrix.org** will be modified to **citrix-service-app**
+
 * [http_request_modify_prefixasprefix.yaml](https://github.com/SaravanakumarR2018/CIC-crd-usecases/blob/master/usecase2/http_request_modify_prefixasprefix.yaml)
 
 ```
