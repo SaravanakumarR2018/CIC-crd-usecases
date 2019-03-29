@@ -119,7 +119,51 @@ curl -vvv http://app.cic-citrix.org/
 The url is modified to /citrix-approot/
 ![Screenshot 2019-03-29 at 5 09 19 PM](https://user-images.githubusercontent.com/43468858/55230505-01a09400-5246-11e9-884e-61a6b70232ea.png)
 
+## b) Substitute url strings
 
+   The requested url can be partially modified as per convenience using RewritePolicy CRDs
+   
+   * [http_url_replace_string.yaml](https://github.com/SaravanakumarR2018/CIC-crd-usecases/blob/master/usecase3/http_url_replace_string.yaml)
+   ```
+   apiVersion: citrix.com/v1
+kind: rewritepolicy
+metadata:
+  name: httpurlreplacestring
+spec:
+  rewrite-policies:
+    - servicenames: 
+        - frontend
+      rewrite-policy:
+        operation: replace_all
+        target: http.req.url
+        modify-expression: '"/"'
+        multiple-occurence-modify: 'regex(re~((^(\/something\/))|(^\/something$))~)'
+        comment: 'HTTP url replace string'
+        direction: REQUEST
+        rewrite-criteria: http.req.is_valid
+   ```
+   ### kubectl command to apply the url modification RewritePolicy CRD
+    ```
+    kubectl create -f http_url_replace_string.yaml
+     ```
+     
+   ### A simple curl request containing *something* string should be modified
+   #### Example 1
+    ```
+    curl http://app.cic-citrix.org/something/simple/citrix
+    ```
+   ##### Result:
+   ![Screenshot 2019-03-29 at 5 21 57 PM](https://user-images.githubusercontent.com/43468858/55230913-3cef9280-5247-11e9-8b42-645ba384a95d.png)
+   #### Example 2
+    ```
+    curl http://app.cic-citrix.org/something (OR)
+    curl http://app.cic-citrix.org/something/
+    ```
+    
+   ##### Result
+   ![Screenshot 2019-03-29 at 5 33 17 PM](https://user-images.githubusercontent.com/43468858/55231494-c5226780-5248-11e9-9241-626727d7f09f.png)
+    
 
+   
 
    
