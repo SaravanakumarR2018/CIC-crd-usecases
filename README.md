@@ -164,6 +164,63 @@ spec:
    ![Screenshot 2019-03-29 at 5 33 17 PM](https://user-images.githubusercontent.com/43468858/55231494-c5226780-5248-11e9-9241-626727d7f09f.png)
     
 
-   
+# Usecase 4
+
+## a) Adding custom headers to the HTTP response packet
+
+* [add_custom_headers.yaml](https://github.com/SaravanakumarR2018/CIC-crd-usecases/blob/master/usecase4/add_custom_headers.yaml)
+```
+apiVersion: citrix.com/v1
+kind: rewritepolicy
+metadata:
+  name: addcustomheaders
+spec:
+  rewrite-policies:
+    - servicenames: 
+        - frontend
+      rewrite-policy:
+        operation: insert_before_all
+        target: http.res.full_header
+        modify-expression: '"\r\nx-request-time:"+sys.time+"\r\nx-using-citrix-ingress-controller: true"'
+        multiple-occurence-modify: 'text("\r\n\r\n")'
+        comment: 'Adding custom headers'
+        direction: RESPONSE
+        rewrite-criteria: 'http.req.is_valid'
+ ```
+
+### Kubectl command to apply the RewritePolicy CRD
+ ```
+ kubectl create -f add_custom_headers.yaml
+ ```
+
+### A simple curl request should have desired custom headers within HTTP response packet
+```
+Saravanas-MacBook-Pro:~ saravanakumarr$ curl -vvv http://app.cic-citrix.org/
+*   Trying 10.102.33.176...
+* TCP_NODELAY set
+* Connected to app.cic-citrix.org (10.102.33.176) port 80 (#0)
+> GET / HTTP/1.1
+> Host: app.cic-citrix.org
+> User-Agent: curl/7.54.0
+> Accept: */*
+> 
+< HTTP/1.1 200 OK
+< Server: nginx/1.8.1
+< Date: Fri, 29 Mar 2019 12:15:09 GMT
+< Content-Type: text/html
+< Transfer-Encoding: chunked
+< Connection: keep-alive
+< X-Powered-By: PHP/5.5.9-1ubuntu4.14
+< x-request-time:Fri, 29 Mar 2019 13:27:40 GMT =============> NEW HEADER ADDED
+< x-using-citrix-ingress-controller: true  ===============> NEW HEADER ADDED
+< 
+<html>
+<head>
+<title> Front End App - v1 </title>
+<style>
+
+TRIMMED
+........
+```
 
    
