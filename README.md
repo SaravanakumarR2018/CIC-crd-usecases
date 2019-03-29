@@ -18,12 +18,50 @@ kubectl create -f web-frontend.yaml
 ```
 # USECASE 1: Adding response header on replies to client
 
-   The below yaml file will add the following headers with the http response sent from microservices to client
+   The below yaml file will add the following headers with the http response sent from microservices to client when the requested url contains **/citrix-app/**
    
    * Add the client source port to the header
    * Add the server destination IP address
    * a random http header
    
    Similar way we can include a variety of information supported by the Citrix ADC on the response header
+   
+   * [add_response_headers.yaml](https://github.com/SaravanakumarR2018/CIC-crd-usecases/blob/master/usecase1/add_response_headers.yaml)
+  
+  ```
+  kubectl create -f add_response_headers.yaml
+  ```
+  
+  ## HTTP Header Response Output:
+  ```
+  Saravanas-MacBook-Pro:usecase1 saravanakumarr$ curl -vvv http://app.cic-citrix.org/citrix-app/
+*   Trying 10.102.33.176...
+* TCP_NODELAY set
+* Connected to app.cic-citrix.org (10.102.33.176) port 80 (#0)
+> GET /citrix-app/ HTTP/1.1
+> Host: app.cic-citrix.org
+> User-Agent: curl/7.54.0
+> Accept: */*
+> 
+< HTTP/1.1 200 OK
+< Server: nginx/1.8.1
+< Date: Fri, 29 Mar 2019 11:14:04 GMT
+< Content-Type: text/html
+< Transfer-Encoding: chunked
+< Connection: keep-alive
+< X-Powered-By: PHP/5.5.9-1ubuntu4.14
+< x-port: 22481
+< x-ip:10.102.33.176
+< x-new-dummy-header: Sending_a_gift
+< 
+<html>
+<head>
+<title> Front End App - v1 </title>
+
+
+TRIMMED
+.......
+  ```
+  
    
    
