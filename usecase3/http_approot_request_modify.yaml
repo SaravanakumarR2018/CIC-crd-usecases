@@ -1,0 +1,15 @@
+apiVersion: citrix.com/v1
+kind: rewritepolicy
+metadata:
+  name: httpapprootrequestmodify
+spec:
+  rewrite-policies:
+    - servicenames: 
+        - frontend
+      rewrite-policy:
+        operation: replace
+        target: http.req.url
+        modify-expression: '"/citrix-approot/"'
+        comment: 'HTTP app root request modify'
+        direction: REQUEST
+        rewrite-criteria: http.req.url.eq("/")
