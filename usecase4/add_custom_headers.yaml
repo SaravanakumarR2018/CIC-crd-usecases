@@ -1,0 +1,16 @@
+apiVersion: citrix.com/v1
+kind: rewritepolicy
+metadata:
+  name: addcustomheaders
+spec:
+  rewrite-policies:
+    - servicenames: 
+        - frontend
+      rewrite-policy:
+        operation: insert_before_all
+        target: http.res.full_header
+        modify-expression: '"\r\nx-request-time:"+sys.time+"\r\nx-using-citrix-ingress-controller: true"'
+        multiple-occurence-modify: 'text("\r\n\r\n")'
+        comment: 'Adding custom headers'
+        direction: RESPONSE
+        rewrite-criteria: 'http.req.is_valid'
