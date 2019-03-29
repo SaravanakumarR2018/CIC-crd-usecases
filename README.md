@@ -83,6 +83,39 @@ TRIMMED
 # USECASE 2:
 ## Usecase 2a: Replace hostname with another
 
+* [http_request_modify_prefixasprefix.yaml](https://github.com/SaravanakumarR2018/CIC-crd-usecases/blob/master/usecase2/http_request_modify_prefixasprefix.yaml)
+
+```
+apiVersion: citrix.com/v1
+kind: rewritepolicy
+metadata:
+  name: httpheadermodifyretainprefix
+spec:
+  rewrite-policies:
+    - servicenames: 
+        - frontend
+      rewrite-policy:
+        operation: replace_all
+        target: 'http.req.header("host")'
+        modify-expression: '"citrix-service-app"'
+        multiple-occurence-modify: 'text("app.cic-citrix.org")'
+        comment: 'HTTP header rewrite of hostname'
+        direction: REQUEST
+        rewrite-criteria: 'http.req.is_valid'
+        
+```
+
+### Kubectl command to execute the RewritePolicy CRD
+```
+kubectl create -f http_request_modify_prefixasprefix.yaml
+```
+
+### A simple curl will modify the hostname using the RewritePolicy CRD
+```
+curl http://app.cic-citrix.org/prefix/foo/bar
+```
+#### Result
+
 <img width="766" alt="Screenshot 2019-03-29 at 7 01 18 PM" src="https://user-images.githubusercontent.com/43468858/55236089-20f2ed80-5255-11e9-9973-a00e34ba5e74.png">
 
 # USECASE 3:
