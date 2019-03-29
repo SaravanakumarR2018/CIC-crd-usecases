@@ -1,0 +1,16 @@
+apiVersion: citrix.com/v1
+kind: rewritepolicy
+metadata:
+  name: httpheadermodifyretainprefix
+spec:
+  rewrite-policies:
+    - servicenames: 
+        - frontend
+      rewrite-policy:
+        operation: replace_all
+        target: 'http.req.header("host")'
+        modify-expression: '"citrix-service-app"'
+        multiple-occurence-modify: 'text("app.cic-citrix.org")'
+        comment: 'HTTP header rewrite of hostname'
+        direction: REQUEST
+        rewrite-criteria: 'http.req.is_valid'
