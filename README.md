@@ -80,10 +80,14 @@ spec:
 TRIMMED
 .......
   ```
-  
+# USECASE 2:
+## Usecase 2a: Replace hostname with another
+
+<img width="766" alt="Screenshot 2019-03-29 at 7 01 18 PM" src="https://user-images.githubusercontent.com/43468858/55236089-20f2ed80-5255-11e9-9973-a00e34ba5e74.png">
+
 # USECASE 3:
 
-## a) Modifying the approot to another url
+## Usecase 3a) Modifying the approot to another url
 
 * [http_approot_request_modify.yaml](https://github.com/SaravanakumarR2018/CIC-crd-usecases/blob/master/usecase3/http_approot_request_modify.yaml)
 
@@ -119,7 +123,7 @@ curl -vvv http://app.cic-citrix.org/
 The url is modified to /citrix-approot/
 ![Screenshot 2019-03-29 at 5 09 19 PM](https://user-images.githubusercontent.com/43468858/55230505-01a09400-5246-11e9-884e-61a6b70232ea.png)
 
-## b) Substitute url strings
+## Usecase 3b) Substitute url strings
 
    The requested url can be partially modified as per convenience using RewritePolicy CRDs
    
