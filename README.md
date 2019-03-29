@@ -166,7 +166,7 @@ spec:
 
 # Usecase 4
 
-## a) Adding custom headers to the HTTP response packet
+## Usecase 4a) Adding custom headers to the HTTP response packet
 
 * [add_custom_headers.yaml](https://github.com/SaravanakumarR2018/CIC-crd-usecases/blob/master/usecase4/add_custom_headers.yaml)
 ```
@@ -222,5 +222,57 @@ Saravanas-MacBook-Pro:~ saravanakumarr$ curl -vvv http://app.cic-citrix.org/
 TRIMMED
 ........
 ```
+
+## Usecase 4b) Adding X-Forwarded-For header within HTTP
+
+* [http_x_forwarded_for_insert.yaml](https://github.com/SaravanakumarR2018/CIC-crd-usecases/blob/master/usecase4/http_x_forwarded_for_insert.yaml)
+```
+apiVersion: citrix.com/v1
+kind: rewritepolicy
+metadata:
+  name: httpxforwardedforaddition
+spec:
+  rewrite-policies:
+    - servicenames: 
+        - frontend
+      rewrite-policy:
+        operation: insert_http_header
+        target: X-Forwarded-For
+        modify-expression: client.ip.src
+        comment: 'HTTP Initial X-Forwarded-For header add'
+        direction: REQUEST
+        rewrite-criteria: 'HTTP.REQ.HEADER("X-Forwarded-For").EXISTS.NOT'
+
+    - servicenames: 
+        - frontend 
+      rewrite-policy:
+        operation: replace 
+        target: HTTP.REQ.HEADER("X-Forwarded-For")
+        modify-expression: 'HTTP.REQ.HEADER("X-Forwarded-For").APPEND(",").APPEND(CLIENT.IP.SRC)'
+        comment: 'HTTP Append X-Forwarded-For IPs'
+        direction: REQUEST
+        rewrite-criteria: 'HTTP.REQ.HEADER("X-Forwarded-For").EXISTS'
+```
+
+### Kubectl command to execute the X-Forwarded-For Yaml file
+```
+kubectl create -f http_x_forwarded_for_insert.yaml
+```
+
+### Example 1: X-Forwarded-For header not present within the HTTP request packet
+```
+curl http://app.cic-citrix.org/
+```
+
+#### Result
+![Screenshot 2019-03-29 at 5 56 11 PM](https://user-images.githubusercontent.com/43468858/55232784-8db5ba00-524c-11e9-9b7e-c864bad4765e.png)
+
+### Example 2: X-Forwarded-For header present within HTTP request packet
+
+```
+ curl --header "X-Forwarded-For: 1.1.1.1" http://app.cic-citrix.org/
+```
+#### Result
+![Screenshot 2019-03-29 at 5 58 49 PM](https://user-images.githubusercontent.com/43468858/55232781-8bebf680-524c-11e9-86e1-2209d519f135.png)
 
    
